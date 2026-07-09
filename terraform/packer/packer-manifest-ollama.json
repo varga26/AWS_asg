@@ -1,0 +1,32 @@
+{
+  "builds": [
+    {
+      "name": "ollama",
+      "builder_type": "amazon-ebs",
+      "build_time": 1783532971,
+      "files": null,
+      "artifact_id": "us-east-1:ami-0ae6c714c773f1f27",
+      "packer_run_uuid": "f84f74a7-213a-c499-a723-f33be8f190d5",
+      "custom_data": null
+    },
+    {
+      "name": "ollama",
+      "builder_type": "amazon-ebs",
+      "build_time": 1783582217,
+      "files": null,
+      "artifact_id": "us-east-1:ami-0d30ba34ef10194df",
+      "packer_run_uuid": "0ed192b5-fbc6-64e4-247a-8c66375bcea3",
+      "custom_data": null
+    },
+    {
+      "name": "ollama",
+      "builder_type": "amazon-ebs",
+      "build_time": 1783583838,
+      "files": null,
+      "artifact_id": "us-east-1:ami-0bd25103559ca6d21",
+      "packer_run_uuid": "adf9fd8b-7edc-9d9f-c685-0cc15e11748a",
+      "custom_data": null
+    }
+  ],
+  "last_run_uuid": "adf9fd8b-7edc-9d9f-c685-0cc15e11748a"
+}
