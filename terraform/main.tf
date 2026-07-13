@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "tfstate" {
   bucket = "terraform-state-bucket-7779823758347t093"
+  force_destroy = true
 }
 
 resource "aws_s3_bucket_versioning" "tfstate_versioning" {
