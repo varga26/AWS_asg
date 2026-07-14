@@ -43,3 +43,16 @@ variable "openwebui_database_url" {
   type        = string
   sensitive   = true
 }
+
+variable "ollama_instance_type" {
+  type = string
+}
+
+variable "openwebui_instance_type" {
+  type = string
+}
+
+variable "webui_secret_key" {
+  type      = string
+ description = "Secret key for OpenWebUI web interface"
+}

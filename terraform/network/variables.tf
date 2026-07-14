@@ -9,3 +9,8 @@ variable "availability_zone_2" {
   default     = "us-east-1b"
   type        = string
 }
+
+variable "vpc_cidr" {
+  description = "CIDR block for the VPC"
+  type        = string
+}

@@ -26,17 +26,29 @@ data "aws_ami" "openwebui" {
 resource "aws_launch_template" "al1_template" {
   name_prefix            = "ollama-ubuntu-"
   image_id               = data.aws_ami.ollama.id
-  instance_type          = "t3.micro"
+  instance_type          = var.ollama_instance_type
   key_name               = aws_key_pair.deployer.key_name
   vpc_security_group_ids = [var.asg_sg_id]
+  tag_specifications {
+    resource_type = "instance"
+    tags = {
+      Name = "ollama-instance"
+    }
+  }
 }
 
 resource "aws_launch_template" "al2_template" {
   name_prefix            = "openwebui-ubuntu-"
   image_id               = data.aws_ami.openwebui.id
-  instance_type          = "t3.micro"
+  instance_type          = var.openwebui_instance_type
   key_name               = aws_key_pair.deployer.key_name
   vpc_security_group_ids = [var.asg_sg_id]
+  tag_specifications {
+    resource_type = "instance"
+    tags = {
+      Name = "openwebui-instance"
+    }
+  }
 
   user_data = base64encode(<<EOF
 #!/bin/bash
@@ -44,7 +56,7 @@ cat >/etc/openwebui.env <<'ENV'
 OLLAMA_BASE_URL=${var.ollama_base_url}
 OLLAMA_BASE_URLS=${var.ollama_base_url}
 DATABASE_URL=${var.openwebui_database_url}
-WEBUI_SECRET_KEY=t1-static-shared-secret-key-12345
+WEBUI_SECRET_KEY=${var.webui_secret_key}
 ENV
 chown root:openwebui /etc/openwebui.env
 chmod 0640 /etc/openwebui.env
@@ -54,7 +66,11 @@ EOF
   )
 }
 
-
+resource"aws_ssm_parameter" "webui_secret_key" {
+  name   = "/webui/secret_key"
+  value  = var.webui_secret_key
+  type   = "SecureString"
+}
 resource "aws_autoscaling_group" "ollama_asg" {
   name_prefix         = "ollama-asg-"
   desired_capacity    = 2

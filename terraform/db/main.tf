@@ -1,12 +1,11 @@
 resource "aws_db_instance" "default" {
-  allocated_storage      = 20
-  db_name                = "mydb"
+  allocated_storage      = var.allocated_storage
+  db_name                = var.db_name
   engine                 = "postgres"
-  engine_version         = "16"
-  instance_class         = "db.t3.micro"
+  engine_version         = var.engine_version
+  instance_class         = var.instance_class
   username               = var.db_username
   password               = var.db_password
-  parameter_group_name   = "default.postgres16"
   skip_final_snapshot    = true
   vpc_security_group_ids = [var.rds_sg_id]
   db_subnet_group_name   = aws_db_subnet_group.default.name
@@ -19,4 +18,15 @@ resource "aws_db_subnet_group" "default" {
   tags = {
     Name = "db-subnet-group"
   }
+}
+
+resource "aws_ssm_parameter" "db_username" {
+  name   = "/db/username"
+  value  = var.db_username
+  type   = "SecureString"
+}
+resource "aws_ssm_parameter" "db_password" {
+  name   = "/db/password"
+  value  = var.db_password
+  type   = "SecureString"
 }
