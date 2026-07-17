@@ -27,3 +27,8 @@ variable "vpc_id" {
   description = "VPC ID from network module"
   type        = string
 }
+
+variable "grafana_instance_id" {
+  description = "Grafana Instance ID from VM module"
+  type        = string
+}

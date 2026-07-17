@@ -45,5 +45,11 @@ output "security_groups_summary" {
     bastion       = aws_security_group.bastion_sg.id
     asg           = aws_security_group.asg_sg.id
     rds           = aws_security_group.rds_sg.id
+    grafana       = aws_security_group.grafana_sg.id
   }
+}
+
+output "grafana_sg_id" {
+  description = "Grafana Security Group ID"
+  value       = aws_security_group.grafana_sg.id
 }

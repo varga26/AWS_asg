@@ -18,6 +18,11 @@ output "rds_resource_id" {
   value       = aws_db_instance.default.resource_id
 }
 
+output "rds_identifier" {
+  description = "RDS database identifier"
+  value       = aws_db_instance.default.identifier
+}
+
 output "rds_database_name" {
   description = "RDS database name"
   value       = aws_db_instance.default.db_name

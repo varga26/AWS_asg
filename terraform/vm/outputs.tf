@@ -18,3 +18,13 @@ output "bastion_ssh_command" {
   description = "SSH command to connect to Bastion"
   value       = "ssh -i /path/to/my-aws-key.pem ubuntu@${aws_instance.bastion.public_ip}"
 }
+
+output "grafana_private_ip" {
+  description = "The private IP of the Grafana Host"
+  value       = aws_instance.grafana.private_ip
+}
+
+output "grafana_instance_id" {
+  description = "The Instance ID of the Grafana Host"
+  value       = aws_instance.grafana.id
+}

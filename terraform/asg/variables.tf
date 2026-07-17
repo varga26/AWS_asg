@@ -56,3 +56,8 @@ variable "webui_secret_key" {
   type      = string
  description = "Secret key for OpenWebUI web interface"
 }
+
+variable "grafana_private_ip" {
+  description = "Private IP of the Grafana instance"
+  type        = string
+}

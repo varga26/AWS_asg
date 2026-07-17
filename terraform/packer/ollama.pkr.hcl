@@ -76,7 +76,22 @@ build {
       "echo 'Downloading Qwen 2.5 0.5B model into image...'",
       "ollama pull qwen2.5:0.5b",
 
-     
+      "echo 'Adding Grafana repository...'",
+      "sudo apt-get install -y apt-transport-https software-properties-common wget gpg",
+      "sudo mkdir -p /etc/apt/keyrings/",
+      "wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | sudo tee /etc/apt/keyrings/grafana.gpg > /dev/null",
+      "echo \"deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main\" | sudo tee -a /etc/apt/sources.list.d/grafana.list",
+      
+      "echo 'Installing Grafana Alloy...'",
+      "sudo apt-get update -y",
+      "sudo apt-get install -y alloy",
+      "sudo systemctl enable alloy",
+      "echo 'Installing CloudWatch Agent...'",
+      "wget https://amazoncloudwatch-agent.s3.amazonaws.com/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb",
+      "sudo dpkg -i -E ./amazon-cloudwatch-agent.deb",
+      "sudo systemctl enable amazon-cloudwatch-agent",
+      "rm ./amazon-cloudwatch-agent.deb",
+
       "sudo apt-get clean",
       "unset HISTFILE"
     ]

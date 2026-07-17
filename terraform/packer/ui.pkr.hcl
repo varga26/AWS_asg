@@ -134,6 +134,12 @@ build {
       "sudo apt-get clean",
       "sudo rm -rf /var/lib/apt/lists/*",
       "sudo rm -rf /tmp/*",
+      "echo 'Installing CloudWatch Agent...'",
+      "wget https://amazoncloudwatch-agent.s3.amazonaws.com/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb",
+      "sudo dpkg -i -E ./amazon-cloudwatch-agent.deb",
+      "sudo systemctl enable amazon-cloudwatch-agent",
+      "rm ./amazon-cloudwatch-agent.deb",
+
       "unset HISTFILE",
       "echo 'OpenWebUI image ready!'"
     ]

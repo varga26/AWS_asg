@@ -53,23 +53,39 @@ variable "ollama_instance_type" {
   default = "t3.micro"
 }
 
-variable "db_username" {
-  type    = string
-  description = "DB username"
-}
-
-variable "db_password" {
-  type    = string
-  description = "DB password"
-}
-
 variable "openwebui_instance_type" {
   type    = string
   default = "t3.micro"
 }
 
 variable "webui_secret_key" {
-  type      = string
-  default   = "t1-static-shared-secret-key-12345"
-  sensitive = true
+  type        = string
+  description = "Secret key for OpenWebUI web interface"
+}
+
+variable "db_username" {
+  type        = string
+  description = "Database master user"
+  default     = "postgres"
+}
+
+variable "db_password" {
+  type        = string
+  description = "Database master password"
+  sensitive   = true
+}
+
+variable "grafana_instance_type" {
+  type        = string
+  description = "EC2 instance type for Grafana"
+  default     = "t3.micro"
+}
+
+variable "endpoint" {
+  type        = string
+  description = "Email address for receiving CloudWatch alarms"
+}
+variable "protocol" {
+  type    = string
+  default = "email"
 }

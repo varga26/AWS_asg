@@ -22,3 +22,23 @@ variable "bastion_instance_type" {
   description = "Instance type for Bastion host"
   type        = string
 }
+
+variable "grafana_instance_type" {
+  description = "Instance type for Grafana host"
+  type        = string
+  
+}
+variable "grafana_ami" {
+  description = "AMI ID for Grafana host"
+  type        = string
+}
+
+variable "grafana_sg_id" {
+  description = "Grafana security group ID"
+  type        = string
+}
+
+variable "private_subnet_1_id" {
+  description = "Private subnet 1 ID from network module"
+  type        = string
+}
