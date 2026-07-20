@@ -320,7 +320,7 @@ resource "grafana_rule_group" "elb_alerts" {
   rule {
     name           = "[llm]-[test]-[ollama]-[low]-[healthy-hosts]"
     condition      = "B"
-    for            = "5m"
+    for            = "1m"
     exec_err_state = "Alerting"
     no_data_state  = "NoData"
 
@@ -357,7 +357,7 @@ resource "grafana_rule_group" "elb_alerts" {
       model = jsonencode({
         conditions = [
           {
-            evaluator = { params = [1], type = "lt" }
+            evaluator = { params = [4], type = "lt" }
             operator = { type = "and" }
             query = { params = ["A"] }
             reducer = { params = [], type = "last" }
@@ -370,4 +370,148 @@ resource "grafana_rule_group" "elb_alerts" {
       })
     }
   }
+}
+
+
+resource "grafana_message_template" "llm_alert" {
+  name     = "llm-alert-template"
+  template = <<-EOT
+    {{ define "llm-alert-title" }}
+    [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .GroupLabels.alertname }}
+    {{ end }}
+
+    {{ define "llm-alert-body" }}
+    {{ if gt (len .Alerts.Firing) 0 }}
+    🔴 *Firing Alerts ({{ .Alerts.Firing | len }})*
+    {{ range .Alerts.Firing }}
+    • *{{ .Labels.alertname }}*
+      Summary: {{ if .Annotations.summary }}{{ .Annotations.summary }}{{ else }}No summary{{ end }}
+      Started: {{ .StartsAt }}
+    {{ end }}
+    {{ end }}
+    {{ if gt (len .Alerts.Resolved) 0 }}
+    ✅ *Resolved Alerts ({{ .Alerts.Resolved | len }})*
+    {{ range .Alerts.Resolved }}
+    • *{{ .Labels.alertname }}* — resolved at {{ .EndsAt }}
+    {{ end }}
+    {{ end }}
+    {{ end }}
+  EOT
+
+  depends_on = [null_resource.wait_for_grafana]
+}
+
+# ── Contact Points ────────────────────────────────────────────────────────────
+
+resource "grafana_contact_point" "email" {
+  name = "Email"
+
+  email {
+    addresses               = [var.endpoint]
+    message                 = "{{ template \"llm-alert-body\" . }}"
+    single_email            = false
+    disable_resolve_message = false
+  }
+
+  depends_on = [null_resource.wait_for_grafana]
+}
+
+resource "grafana_contact_point" "slack" {
+  count = var.slack_webhook_url != "" ? 1 : 0
+  name  = "Slack"
+
+  slack {
+    url                     = var.slack_webhook_url
+    title                   = "{{ template \"llm-alert-title\" . }}"
+    text                    = "{{ template \"llm-alert-body\" . }}"
+    username                = "Grafana Alertmanager"
+    icon_emoji              = ":grafana:"
+    disable_resolve_message = false
+  }
+
+  depends_on = [null_resource.wait_for_grafana]
+}
+
+resource "grafana_contact_point" "pagerduty" {
+  count = var.pagerduty_integration_key != "" ? 1 : 0
+  name  = "PagerDuty"
+
+  pagerduty {
+    integration_key         = var.pagerduty_integration_key
+    severity                = "critical"
+    class                   = "LLM Platform"
+    component               = "ollama-openwebui"
+    group                   = "llm-monitoring"
+    summary                 = "{{ template \"llm-alert-title\" . }}"
+    disable_resolve_message = false
+  }
+
+  depends_on = [null_resource.wait_for_grafana]
+}
+
+resource "grafana_notification_policy" "main" {
+  group_by      = ["alertname", "grafana_folder"]
+  contact_point = grafana_contact_point.email.name
+
+  group_wait      = "30s"
+  group_interval  = "5m"
+  repeat_interval = "1h"
+
+  # Email
+  policy {
+    group_by      = ["alertname"]
+    contact_point = grafana_contact_point.email.name
+    continue      = true
+    matcher {
+      label = "grafana_folder"
+      match = "="
+      value = "LLM Monitoring"
+    }
+    group_wait      = "30s"
+    group_interval  = "5m"
+    repeat_interval = "1h"
+  }
+
+  # Slack
+  dynamic "policy" {
+    for_each = var.slack_webhook_url != "" ? [1] : []
+    content {
+      group_by      = ["alertname"]
+      contact_point = grafana_contact_point.slack[0].name
+      continue      = true
+      matcher {
+        label = "grafana_folder"
+        match = "="
+        value = "LLM Monitoring"
+      }
+      group_wait      = "30s"
+      group_interval  = "5m"
+      repeat_interval = "1h"
+    }
+  }
+
+  # PagerDuty
+  dynamic "policy" {
+    for_each = var.pagerduty_integration_key != "" ? [1] : []
+    content {
+      group_by      = ["alertname"]
+      contact_point = grafana_contact_point.pagerduty[0].name
+      continue      = true
+      matcher {
+        label = "grafana_folder"
+        match = "="
+        value = "LLM Monitoring"
+      }
+      group_wait      = "30s"
+      group_interval  = "5m"
+      repeat_interval = "4h"
+    }
+  }
+
+
+  depends_on = [
+    grafana_contact_point.email,
+    grafana_contact_point.slack,
+    grafana_contact_point.pagerduty,
+  ]
 }

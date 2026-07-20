@@ -89,3 +89,19 @@ variable "protocol" {
   type    = string
   default = "email"
 }
+
+variable "slack_webhook_url" {
+  type        = string
+  description = "Slack incoming webhook URL for Grafana alert notifications (leave empty to disable)"
+  default     = ""
+  sensitive   = true
+}
+
+variable "pagerduty_integration_key" {
+  type        = string
+  description = "PagerDuty Events v2 integration key (leave empty to disable)"
+  default     = ""
+  sensitive   = true
+}
+
+
