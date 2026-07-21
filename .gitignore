@@ -1,6 +1,6 @@
 # SSH Keys (CRITICAL SECURITY)
 *.pem
-*.pem.pub
+# *.pem.pub
 
 # AWS CLI installers
 aws/
