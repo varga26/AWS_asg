@@ -139,8 +139,8 @@ resource"aws_ssm_parameter" "webui_secret_key" {
 }
 resource "aws_autoscaling_group" "ollama_asg" {
   name_prefix         = "ollama-asg-"
-  desired_capacity    = 2
-  min_size            = 2
+  desired_capacity    = 1
+  min_size            = 1
   max_size            = 4
   vpc_zone_identifier = [var.private_subnet_1_az_id, var.private_subnet_2_az_id]
   target_group_arns   = [var.ollama_target_group_arn]
@@ -173,8 +173,8 @@ resource "aws_autoscaling_group" "ollama_asg" {
 
 resource "aws_autoscaling_group" "openwebui_asg" {
   name_prefix               = "openwebui-asg-"
-  desired_capacity          = 2
-  min_size                  = 2
+  desired_capacity          = 1
+  min_size                  = 1
   max_size                  = 4
   vpc_zone_identifier       = [var.private_subnet_1_az_id, var.private_subnet_2_az_id]
   target_group_arns         = [var.target_group_arn]
