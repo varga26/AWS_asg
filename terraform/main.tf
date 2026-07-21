@@ -72,7 +72,7 @@ module "asg" {
 }
 
 module "sns" {
-  source      = "./sns"
+  source   = "./sns"
   protocol = var.protocol
   endpoint = var.endpoint
 }
@@ -83,8 +83,8 @@ module "cw_ollama" {
   dashboard_name   = "ollama-dashboard"
   create_log_group = true
   log_group_name   = "/aws/ollama"
-  
-  alarm_actions    = [module.sns.sns_topic_arn]
+
+  alarm_actions = [module.sns.sns_topic_arn]
   alarms = [
     {
       name                = "[llm]-[test]-[ec2]-[high]-[cpu]"
@@ -207,7 +207,7 @@ module "cw_ollama" {
         stacked = false
       }
     },
-  
+
     {
       type   = "metric"
       x      = 0
@@ -240,7 +240,7 @@ module "cw_ollama" {
         stacked = false
       }
     }
-    
+
   ]
 }
 
@@ -248,8 +248,8 @@ module "cw_rds" {
   source         = "./CloudeWatch"
   aws_region     = var.aws_region
   dashboard_name = "rds-dashboard"
-  
-  alarm_actions  = [module.sns.sns_topic_arn]
+
+  alarm_actions = [module.sns.sns_topic_arn]
   alarms = [
     {
       name                = "[llm]-[test]-[db]-[high]-[cpu]"
@@ -339,8 +339,8 @@ module "cw_elb" {
   source         = "./CloudeWatch"
   aws_region     = var.aws_region
   dashboard_name = "elb-dashboard"
-  
-  alarm_actions  = [module.sns.sns_topic_arn]
+
+  alarm_actions = [module.sns.sns_topic_arn]
   alarms = [
     {
       name                = "[llm]-[test]-[elb]-[high]-[host-count]"

@@ -19,7 +19,7 @@ resource "grafana_rule_group" "ec2_alerts" {
       }
       datasource_uid = grafana_data_source.prometheus.uid
       model = jsonencode({
-        expr = "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)"
+        expr  = "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)"
         refId = "A"
       })
     }
@@ -34,15 +34,15 @@ resource "grafana_rule_group" "ec2_alerts" {
         conditions = [
           {
             evaluator = { params = [80], type = "gt" }
-            operator = { type = "and" }
-            query = { params = ["A"] }
-            reducer = { params = [], type = "last" }
-            type = "query"
+            operator  = { type = "and" }
+            query     = { params = ["A"] }
+            reducer   = { params = [], type = "last" }
+            type      = "query"
           }
         ]
         datasource = { type = "__expr__", uid = "-100" }
-        refId = "B"
-        type = "classic_conditions"
+        refId      = "B"
+        type       = "classic_conditions"
       })
     }
   }
@@ -62,7 +62,7 @@ resource "grafana_rule_group" "ec2_alerts" {
       }
       datasource_uid = grafana_data_source.prometheus.uid
       model = jsonencode({
-        expr = "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)"
+        expr  = "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)"
         refId = "A"
       })
     }
@@ -77,15 +77,15 @@ resource "grafana_rule_group" "ec2_alerts" {
         conditions = [
           {
             evaluator = { params = [10], type = "lt" }
-            operator = { type = "and" }
-            query = { params = ["A"] }
-            reducer = { params = [], type = "last" }
-            type = "query"
+            operator  = { type = "and" }
+            query     = { params = ["A"] }
+            reducer   = { params = [], type = "last" }
+            type      = "query"
           }
         ]
         datasource = { type = "__expr__", uid = "-100" }
-        refId = "B"
-        type = "classic_conditions"
+        refId      = "B"
+        type       = "classic_conditions"
       })
     }
   }
@@ -137,15 +137,15 @@ resource "grafana_rule_group" "rds_alerts" {
         conditions = [
           {
             evaluator = { params = [80], type = "gt" }
-            operator = { type = "and" }
-            query = { params = ["A"] }
-            reducer = { params = [], type = "last" }
-            type = "query"
+            operator  = { type = "and" }
+            query     = { params = ["A"] }
+            reducer   = { params = [], type = "last" }
+            type      = "query"
           }
         ]
         datasource = { type = "__expr__", uid = "-100" }
-        refId = "B"
-        type = "classic_conditions"
+        refId      = "B"
+        type       = "classic_conditions"
       })
     }
   }
@@ -190,15 +190,15 @@ resource "grafana_rule_group" "rds_alerts" {
         conditions = [
           {
             evaluator = { params = [5000000000], type = "lt" } # 5 GB
-            operator = { type = "and" }
-            query = { params = ["A"] }
-            reducer = { params = [], type = "last" }
-            type = "query"
+            operator  = { type = "and" }
+            query     = { params = ["A"] }
+            reducer   = { params = [], type = "last" }
+            type      = "query"
           }
         ]
         datasource = { type = "__expr__", uid = "-100" }
-        refId = "B"
-        type = "classic_conditions"
+        refId      = "B"
+        type       = "classic_conditions"
       })
     }
   }
@@ -250,15 +250,15 @@ resource "grafana_rule_group" "elb_alerts" {
         conditions = [
           {
             evaluator = { params = [10], type = "gt" }
-            operator = { type = "and" }
-            query = { params = ["A"] }
-            reducer = { params = [], type = "last" }
-            type = "query"
+            operator  = { type = "and" }
+            query     = { params = ["A"] }
+            reducer   = { params = [], type = "last" }
+            type      = "query"
           }
         ]
         datasource = { type = "__expr__", uid = "-100" }
-        refId = "B"
-        type = "classic_conditions"
+        refId      = "B"
+        type       = "classic_conditions"
       })
     }
   }
@@ -304,15 +304,15 @@ resource "grafana_rule_group" "elb_alerts" {
         conditions = [
           {
             evaluator = { params = [2], type = "lt" }
-            operator = { type = "and" }
-            query = { params = ["A"] }
-            reducer = { params = [], type = "last" }
-            type = "query"
+            operator  = { type = "and" }
+            query     = { params = ["A"] }
+            reducer   = { params = [], type = "last" }
+            type      = "query"
           }
         ]
         datasource = { type = "__expr__", uid = "-100" }
-        refId = "B"
-        type = "classic_conditions"
+        refId      = "B"
+        type       = "classic_conditions"
       })
     }
   }
@@ -358,15 +358,15 @@ resource "grafana_rule_group" "elb_alerts" {
         conditions = [
           {
             evaluator = { params = [4], type = "lt" }
-            operator = { type = "and" }
-            query = { params = ["A"] }
-            reducer = { params = [], type = "last" }
-            type = "query"
+            operator  = { type = "and" }
+            query     = { params = ["A"] }
+            reducer   = { params = [], type = "last" }
+            type      = "query"
           }
         ]
         datasource = { type = "__expr__", uid = "-100" }
-        refId = "B"
-        type = "classic_conditions"
+        refId      = "B"
+        type       = "classic_conditions"
       })
     }
   }

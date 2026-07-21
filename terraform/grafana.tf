@@ -34,7 +34,7 @@ resource "grafana_dashboard" "hosts" {
 }
 
 resource "grafana_dashboard" "services" {
-  folder      = grafana_folder.llm_monitoring.id
+  folder = grafana_folder.llm_monitoring.id
   config_json = templatefile("${path.module}/dashboards/services.json", {
     cloudwatch_uid                    = grafana_data_source.cloudwatch.uid
     rds_identifier                    = module.db.rds_identifier
@@ -43,33 +43,33 @@ resource "grafana_dashboard" "services" {
     ollama_lb_arn_suffix              = module.lb.ollama_lb_arn_suffix
     ollama_target_group_arn_suffix    = module.lb.ollama_target_group_arn_suffix
   })
-  depends_on  = [grafana_data_source.cloudwatch]
+  depends_on = [grafana_data_source.cloudwatch]
 }
 
 resource "grafana_dashboard" "asg" {
-  folder      = grafana_folder.llm_monitoring.id
+  folder = grafana_folder.llm_monitoring.id
   config_json = templatefile("${path.module}/dashboards/asg.json", {
     cloudwatch_uid = grafana_data_source.cloudwatch.uid
     asg_name       = module.asg.ollama_asg_name
   })
-  depends_on  = [grafana_data_source.cloudwatch]
+  depends_on = [grafana_data_source.cloudwatch]
 }
 
 resource "grafana_dashboard" "alb" {
-  folder      = grafana_folder.llm_monitoring.id
+  folder = grafana_folder.llm_monitoring.id
   config_json = templatefile("${path.module}/dashboards/alb.json", {
     cloudwatch_uid          = grafana_data_source.cloudwatch.uid
     alb_arn_suffix          = module.lb.alb_arn_suffix
     target_group_arn_suffix = module.lb.target_group_arn_suffix
   })
-  depends_on  = [grafana_data_source.cloudwatch]
+  depends_on = [grafana_data_source.cloudwatch]
 }
 
 resource "grafana_dashboard" "rds" {
-  folder      = grafana_folder.llm_monitoring.id
+  folder = grafana_folder.llm_monitoring.id
   config_json = templatefile("${path.module}/dashboards/rds.json", {
     cloudwatch_uid = grafana_data_source.cloudwatch.uid
     rds_identifier = module.db.rds_identifier
   })
-  depends_on  = [grafana_data_source.cloudwatch]
+  depends_on = [grafana_data_source.cloudwatch]
 }
