@@ -73,3 +73,4 @@ resource "grafana_dashboard" "rds" {
   })
   depends_on = [grafana_data_source.cloudwatch]
 }
+
