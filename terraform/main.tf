@@ -381,7 +381,6 @@ module "cw_elb" {
   ]
 
   widgets = [
-    # ── ALB (OpenWebUI) ──────────────────────────────────────────────────────
     {
       type   = "metric"
       x      = 0
