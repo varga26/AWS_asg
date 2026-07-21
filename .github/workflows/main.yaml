@@ -13,6 +13,10 @@ env:
  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
  BUCKET_TF_STATE: ${{ secrets.BUCKET_TF_STATE}}
+ TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
+ TF_VAR_db_username: ${{ secrets.DB_USERNAME }}
+ TF_VAR_webui_secret_key: ${{ secrets.WEBUI_SECRET_KEY }}
+ TF_VAR_endpoint: ${{ secrets.ENDPOINT }}
  
 jobs:
  terraform:
