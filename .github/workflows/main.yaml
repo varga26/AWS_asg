@@ -30,7 +30,7 @@ jobs:
      - name: Setup Terraform with specified version on the runner
        uses: hashicorp/setup-terraform@v3
        with:
-         terraform_version: 1.4.1
+         terraform_version: 1.5.0
     
      - name: Terraform init
        id: init
