@@ -47,6 +47,7 @@ module "vm" {
 
 module "asg" {
   source                  = "./modules/asg"
+  public_key              = file("${path.module}/../new-aws-key.pem.pub")
   grafana_private_ip      = module.vm.grafana_private_ip
   asg_sg_id               = module.security.asg_sg_id
   private_subnet_1_az_id  = module.network.private_subnet_1_az_id

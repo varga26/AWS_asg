@@ -61,3 +61,8 @@ variable "grafana_private_ip" {
   description = "Private IP of the Grafana instance"
   type        = string
 }
+
+variable "public_key" {
+  type = string
+}
+

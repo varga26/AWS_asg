@@ -1,6 +1,6 @@
 resource "aws_key_pair" "deployer" {
   key_name   = "new-ssh-key"
-  public_key = file("${path.module}/../../new-aws-key.pem.pub")
+  public_key = var.public_key
 }
 
 data "aws_ami" "ollama" {
