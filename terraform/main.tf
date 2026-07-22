@@ -83,3 +83,4 @@ module "monitoring" {
   slack_webhook_url                 = var.slack_webhook_url
   pagerduty_integration_key         = var.pagerduty_integration_key
 }
+
