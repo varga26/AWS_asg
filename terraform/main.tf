@@ -70,17 +70,17 @@ module "sns" {
 module "monitoring" {
   source = "./modules/monitoring"
 
-  aws_region                        = var.aws_region
-  sns_topic_arn                     = module.sns.sns_topic_arn
-  alb_dns_name                      = module.lb.alb_dns_name
-  alb_arn_suffix                    = module.lb.alb_arn_suffix
-  target_group_arn_suffix           = module.lb.target_group_arn_suffix
-  ollama_lb_arn_suffix              = module.lb.ollama_lb_arn_suffix
-  ollama_target_group_arn_suffix    = module.lb.ollama_target_group_arn_suffix
-  ollama_asg_name                   = module.asg.ollama_asg_name
-  rds_identifier                    = module.db.rds_identifier
-  endpoint                          = var.endpoint
-  slack_webhook_url                 = var.slack_webhook_url
-  pagerduty_integration_key         = var.pagerduty_integration_key
+  aws_region                     = var.aws_region
+  sns_topic_arn                  = module.sns.sns_topic_arn
+  alb_dns_name                   = module.lb.alb_dns_name
+  alb_arn_suffix                 = module.lb.alb_arn_suffix
+  target_group_arn_suffix        = module.lb.target_group_arn_suffix
+  ollama_lb_arn_suffix           = module.lb.ollama_lb_arn_suffix
+  ollama_target_group_arn_suffix = module.lb.ollama_target_group_arn_suffix
+  ollama_asg_name                = module.asg.ollama_asg_name
+  rds_identifier                 = module.db.rds_identifier
+  endpoint                       = var.endpoint
+  slack_webhook_url              = var.slack_webhook_url
+  pagerduty_integration_key      = var.pagerduty_integration_key
 }
 
