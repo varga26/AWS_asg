@@ -28,10 +28,6 @@ variable "grafana_instance_type" {
   type        = string
   
 }
-variable "grafana_ami" {
-  description = "AMI ID for Grafana host"
-  type        = string
-}
 
 variable "grafana_sg_id" {
   description = "Grafana security group ID"
